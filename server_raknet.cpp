@@ -13,7 +13,7 @@
 #include <string.h>
 
 
-bool StartRakNet(int port, int broadcastInterval, const char* broadcastMsg)
+bool StartRakNetServer(int port, int broadcastInterval, const char* broadcastMsg)
 {
 	puts("Start RakNet Server ...");
 

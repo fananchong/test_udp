@@ -247,6 +247,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\client.cpp" />
+    <ClCompile Include="..\client_raknet.cpp" />
     <ClCompile Include="..\raknet\Base64Encoder.cpp" />
     <ClCompile Include="..\raknet\BitStream.cpp" />
     <ClCompile Include="..\raknet\CCRakNetSlidingWindow.cpp" />

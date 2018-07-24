@@ -66,6 +66,7 @@ endif
 
 OBJECTS := \
 	$(OBJDIR)/client.o \
+	$(OBJDIR)/client_raknet.o \
 	$(OBJDIR)/Base64Encoder.o \
 	$(OBJDIR)/BitStream.o \
 	$(OBJDIR)/CCRakNetSlidingWindow.o \
@@ -234,6 +235,9 @@ $(GCH): $(PCH)
 endif
 
 $(OBJDIR)/client.o: ../client.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/client_raknet.o: ../client_raknet.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Base64Encoder.o: ../raknet/Base64Encoder.cpp

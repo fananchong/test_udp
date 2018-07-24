@@ -4,13 +4,18 @@
 #pragma comment(lib, "ws2_32.lib")
 #endif
 
-bool StartRakNet(int port, int broadcastInterval, const char* broadcastMsg);
+bool StartRakNetServer(int port, int broadcastInterval, const char* broadcastMsg);
 
 int main()
 {
-	const char* msg = "hello msgaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamsg";
+	const int dataSzie = 400;				// 数据包大小
+	const int broadcastInterval = 100;		// 广播间隔
+	const int raknetPort = 5001;			// raknet server 端口号
 
-	std::thread thrd1(StartRakNet, 5001, 100, msg);
+	char msg[dataSzie] = { 0 };
+	memset(msg, 97, dataSzie - 1);	// msg =  "aaaaa ... aaaaaa"
+
+	std::thread thrd1(StartRakNetServer, raknetPort, broadcastInterval, msg);
 
 	for (;;)
 	{
