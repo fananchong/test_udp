@@ -176,6 +176,7 @@ OBJECTS := \
 	$(OBJDIR)/_FindFirst.o \
 	$(OBJDIR)/gettimeofday.o \
 	$(OBJDIR)/server.o \
+	$(OBJDIR)/server_raknet.o \
 
 RESOURCES := \
 
@@ -564,6 +565,9 @@ $(OBJDIR)/gettimeofday.o: ../raknet/gettimeofday.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/server.o: ../server.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/server_raknet.o: ../server_raknet.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

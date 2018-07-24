@@ -30,12 +30,12 @@ project "server"
     kind "ConsoleApp"
     targetname "server"
     files {
-        "../server.cpp",
+        "../server*.cpp",
     }
 	
 project "client"
     kind "ConsoleApp"
     targetname "client"
     files {
-        "../client.cpp",
+        "../client*.cpp",
     }

@@ -357,6 +357,7 @@
     <ClCompile Include="..\raknet\_FindFirst.cpp" />
     <ClCompile Include="..\raknet\gettimeofday.cpp" />
     <ClCompile Include="..\server.cpp" />
+    <ClCompile Include="..\server_raknet.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -801,5 +801,6 @@
       <Filter>raknet</Filter>
     </ClCompile>
     <ClCompile Include="..\server.cpp" />
+    <ClCompile Include="..\server_raknet.cpp" />
   </ItemGroup>
 </Project>
