@@ -1,0 +1,2 @@
+FILE(GLOB SRC_LISTS *.cpp *.h)
+ADD_LIBRARY("raknet" STATIC ${SRC_LISTS})
