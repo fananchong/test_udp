@@ -1,9 +1,5 @@
 #include <thread>
 
-#ifdef _MSC_VER
-#pragma comment(lib, "ws2_32.lib")
-#endif
-
 bool ConnectRakNetServer(const char*sip, int sport, int updateInterval);
 
 int main()

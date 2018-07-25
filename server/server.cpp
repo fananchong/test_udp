@@ -1,8 +1,5 @@
 #include <thread>
-
-#ifdef _MSC_VER
-#pragma comment(lib, "ws2_32.lib")
-#endif
+#include <string.h>
 
 bool StartRakNetServer(int port, int broadcastInterval, const char* broadcastMsg);
 

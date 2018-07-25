@@ -30,7 +30,7 @@ bool ConnectRakNetServer(const char*sip, int sport, int updateInterval)
 
 	char ip[64], serverPort[30], clientPort[30];
 	strcpy(ip, sip);
-	itoa(sport, serverPort, 10);
+	sprintf(serverPort, "%d", sport);
 	strcpy(clientPort, "0");
 
 	client->AllowConnectionResponseIPMigration(false);

@@ -31,7 +31,7 @@ bool StartRakNetServer(int port, int broadcastInterval, const char* broadcastMsg
 
 	// Holds user data
 	char portstring[30] = { 0 };
-	itoa(port, portstring, 10);
+	sprintf(portstring, "%d", port);
 
 	// Starting the server is very simple.  2 players allowed.
 	// 0 means we don't care about a connectionValidationInteger, and false
