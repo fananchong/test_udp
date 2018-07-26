@@ -16,6 +16,8 @@
 #endif
 #include "client_helper.h"
 
+long long get_tick_count(void);
+
 // We copy this from Multiplayer.cpp to keep things all in one file for this example
 unsigned char GetPacketIdentifier(RakNet::Packet *p);
 
@@ -56,6 +58,8 @@ bool ConnectRakNetServer(const char*sip, int sport, int updateInterval, const st
 	printf("My GUID is %s\n", client->GetGuidFromSystemAddress(RakNet::UNASSIGNED_SYSTEM_ADDRESS).ToString());
 
 	char message[2048];
+
+	long long preTCPRecvTime = 0;
 
 	// Loop for input
 	while (1)
@@ -132,7 +136,15 @@ bool ConnectRakNetServer(const char*sip, int sport, int updateInterval, const st
 				// It's a client, so just show the message
 				//printf("%s\n", p->data);
 
-				asioClient->Write("1");
+				auto now = get_tick_count();
+				if (preTCPRecvTime == 0)
+				{
+					preTCPRecvTime = now;
+				}
+				auto detal = now - preTCPRecvTime;
+				char temp[256];
+				snprintf(temp, sizeof(temp),"1_%d",detal);
+				asioClient->Write(temp);
 
 				break;
 			}
