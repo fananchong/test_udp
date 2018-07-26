@@ -1,6 +1,7 @@
 #include <thread>
+#include "client_helper.h"
 
-bool ConnectRakNetServer(const char*sip, int sport, int updateInterval);
+bool ConnectRakNetServer(const char*sip, int sport, int updateInterval, const std::shared_ptr<AsioClient>& asioClient);
 
 int main()
 {
@@ -8,7 +9,8 @@ int main()
 	const char* server = "127.0.0.1";	// 测试服务器地址
 	int raknetPort = 5001;				// raknet server 端口号
 
-	std::thread thrd1(ConnectRakNetServer, server, raknetPort, updateInterval);
+	std::shared_ptr<AsioClient> asioClient = InitAsioClient("127.0.0.1", "3333");
+	std::thread thrd1(ConnectRakNetServer, server, raknetPort, updateInterval, asioClient);
 
 	for (;;)
 	{

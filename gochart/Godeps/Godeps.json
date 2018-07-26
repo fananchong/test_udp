@@ -1,0 +1,20 @@
+{
+	"ImportPath": "gochart",
+	"GoVersion": "go1.10",
+	"GodepVersion": "v80",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/bitly/go-simplejson",
+			"Comment": "v0.5.0-8-g0c96595",
+			"Rev": "0c965951289cce37dec52ad1f34200fefc816777"
+		},
+		{
+			"ImportPath": "github.com/fananchong/gochart",
+			"Comment": "v2.1",
+			"Rev": "a0d1b57622da11a84f9fbcdb0b1e4240f3cebbae"
+		}
+	]
+}

@@ -14,11 +14,12 @@
 #else
 #include <unistd.h> // usleep
 #endif
+#include "client_helper.h"
 
 // We copy this from Multiplayer.cpp to keep things all in one file for this example
 unsigned char GetPacketIdentifier(RakNet::Packet *p);
 
-bool ConnectRakNetServer(const char*sip, int sport, int updateInterval)
+bool ConnectRakNetServer(const char*sip, int sport, int updateInterval, const std::shared_ptr<AsioClient>& asioClient)
 {
 	RakNet::RakNetStatistics *rss;
 	// Pointers to the interfaces of our server and client.
@@ -129,7 +130,10 @@ bool ConnectRakNetServer(const char*sip, int sport, int updateInterval)
 				break;
 			default:
 				// It's a client, so just show the message
-				printf("%s\n", p->data);
+				//printf("%s\n", p->data);
+
+				asioClient->Write("1");
+
 				break;
 			}
 		}
