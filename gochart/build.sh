@@ -2,7 +2,7 @@
 
 set -ex
 
-docker run --rm -e GOPATH=/go/:/temp/ -v /d/temp/:/temp/ -v "$PWD":/go/src/gochart -w /go/src/gochart golang go build ./...
+docker run --rm -e GOPATH=/go/ -v "$PWD":/go/src/gochart -w /go/src/gochart golang go build ./...
 
 docker build -t gochart .
 
