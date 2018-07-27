@@ -46,10 +46,15 @@ private:
 		boost::asio::async_connect(socket_, endpoints,
 			[this](boost::system::error_code ec, tcp::endpoint)
 		{
-			if (ec)
+			if (!ec)
 			{
-				// error
-				exit(1);
+				char temp[256];
+				boost::asio::async_read(socket_,
+					boost::asio::buffer(temp, 256),
+					[this](boost::system::error_code ec, std::size_t /*length*/)
+				{
+					
+				});
 			}
 		});
 	}
@@ -82,4 +87,4 @@ private:
 	message_queue write_msgs_;
 };
 
-std::shared_ptr<AsioClient> InitAsioClient(const char* ip, const char* port);
+std::shared_ptr<AsioClient> InitAsioClient(boost::asio::io_context &io_context, const char* ip, const char* port);

@@ -24,7 +24,7 @@ func main() {
 	g_chart = NewChart()
 	s := &gochart.ChartServer{}
 	s.AddChart("chart", g_chart, false)
-	go func() { println(s.ListenAndServe(":8000").Error()) }()
+	go func() { fmt.Println(s.ListenAndServe(":8000").Error()) }()
 
 	//
 	port := 3333
@@ -52,7 +52,9 @@ func main() {
 					fmt.Println(err)
 					break
 				}
-
+				if ln == 0 {
+					continue
+				}
 				nn := strings.Split(string(b[:ln]), "_")
 				n, err1 := strconv.Atoi(nn[1])
 				if err1 == nil {

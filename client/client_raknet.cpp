@@ -142,8 +142,9 @@ bool ConnectRakNetServer(const char*sip, int sport, int updateInterval, const st
 					preTCPRecvTime = now;
 				}
 				auto detal = now - preTCPRecvTime;
+				preTCPRecvTime = now;
 				char temp[256];
-				snprintf(temp, sizeof(temp),"1_%d",detal);
+				snprintf(temp, sizeof(temp),"1_%d", detal);
 				asioClient->Write(temp);
 
 				break;
