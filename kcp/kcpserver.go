@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 	"time"
 
 	"github.com/xtaci/kcp-go"
@@ -33,12 +32,11 @@ func KcpServer(port int, interval time.Duration, msg []byte) {
 		go func() {
 			// 每100ms发送一次 hello消息
 			t := time.NewTicker(interval)
-			counter := 0
 			for {
 				select {
 				case <-t.C:
-					prefix := []byte(strconv.Itoa(counter) + "_")
-					conn.Write(append(prefix, msg...))
+					conn.Write(msg)
+					fmt.Println("aaaaaaaaaaaaaaaaaaaaaa")
 				}
 			}
 		}()
@@ -46,9 +44,11 @@ func KcpServer(port int, interval time.Duration, msg []byte) {
 }
 
 func getmsg() []byte {
+	count := 400
 	var msg []byte
-	for i := 0; i < 400; i++ {
+	for i := 0; i < count; i++ {
 		msg = append(msg, 97)
 	}
+	msg[count-1] = 0
 	return msg
 }

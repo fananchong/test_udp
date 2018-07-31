@@ -3,5 +3,4 @@ FROM golang
 WORKDIR /
 
 COPY ./kcpserver /kcpserver
-
-ENTRYPOINT ["/kcpserver"]
+COPY ./kcpclient /kcpclient
