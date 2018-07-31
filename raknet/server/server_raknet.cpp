@@ -13,7 +13,7 @@
 #include <string.h>
 
 
-bool StartRakNetServer(int port, int broadcastInterval, const char* broadcastMsg)
+bool StartRakNetServer(int port, int broadcastInterval, const char* broadcastMsg, int broadcastMsgLen)
 {
 	puts("Start RakNet Server ...");
 
@@ -73,16 +73,13 @@ bool StartRakNetServer(int port, int broadcastInterval, const char* broadcastMsg
 	}
 
 	printf("\nMy GUID is %s\n", server->GetGuidFromSystemAddress(RakNet::UNASSIGNED_SYSTEM_ADDRESS).ToString());
-	char message[2048];
-	int counter = 0;
 
 	// Loop for input
 	while (1)
 	{
 		// This sleep keeps RakNet responsive
 		RakSleep(broadcastInterval);
-		snprintf(message, sizeof(message), "%d_%s", ++counter, broadcastMsg);
-		server->Send(message, strlen(message) + 1, HIGH_PRIORITY, RELIABLE_ORDERED, 0, RakNet::UNASSIGNED_SYSTEM_ADDRESS, true);
+		server->Send(broadcastMsg, broadcastMsgLen, HIGH_PRIORITY, RELIABLE_ORDERED, 0, RakNet::UNASSIGNED_SYSTEM_ADDRESS, true);
 	}
 
 	server->Shutdown(300);

@@ -136,6 +136,12 @@ bool ConnectRakNetServer(const char*sip, int sport, int updateInterval, const st
 				// It's a client, so just show the message
 				//printf("%s\n", p->data);
 
+				if (p->length != 400) {
+					printf("data error! p->bitSize = %d", p->bitSize);
+					printf("data = %s", p->data);
+					exit(0);
+				}
+
 				auto now = get_tick_count();
 				if (preTCPRecvTime == 0)
 				{
@@ -144,7 +150,7 @@ bool ConnectRakNetServer(const char*sip, int sport, int updateInterval, const st
 				auto detal = now - preTCPRecvTime;
 				preTCPRecvTime = now;
 				char temp[256];
-				snprintf(temp, sizeof(temp),"1_%d", detal);
+				snprintf(temp, sizeof(temp), "1_%d", detal);
 				asioClient->Write(temp);
 
 				break;

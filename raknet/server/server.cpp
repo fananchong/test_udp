@@ -1,7 +1,7 @@
 #include <thread>
 #include <string.h>
 
-bool StartRakNetServer(int port, int broadcastInterval, const char* broadcastMsg);
+bool StartRakNetServer(int port, int broadcastInterval, const char* broadcastMsg, int broadcastMsgLen);
 
 int main()
 {
@@ -12,7 +12,7 @@ int main()
 	char msg[dataSzie] = { 0 };
 	memset(msg, 97, dataSzie - 1);	// msg =  "aaaaa ... aaaaaa"
 
-	std::thread thrd1(StartRakNetServer, raknetPort, broadcastInterval, msg);
+	std::thread thrd1(StartRakNetServer, raknetPort, broadcastInterval, msg, dataSzie);
 
 	for (;;)
 	{
