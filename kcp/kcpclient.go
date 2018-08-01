@@ -13,7 +13,7 @@ var gChartSession *ChartSession
 
 func main() {
 	addrs := "127.0.0.1:5002"
-	gChartSession := &ChartSession{}
+	gChartSession = &ChartSession{}
 	gChartSession.Connect("127.0.0.1:3333", gChartSession)
 	gChartSession.Verify()
 	KcpClient(addrs)
@@ -56,10 +56,8 @@ func onKcpRecv(data []byte, now int64) {
 
 	detal := (now - preTCPRecvTime) / int64(time.Millisecond)
 	preTCPRecvTime = now
-
-	//	g_chart.AddKcpData(detal)
-
-	gChartSession.Send()
+	temp := []byte(fmt.Sprintf("2_%d", detal))
+	gChartSession.SendRaw(temp)
 }
 
 type ChartSession struct {
