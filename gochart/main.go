@@ -3,6 +3,7 @@ package main
 // usage: gochart --log_dir=./log -stderrthreshold 0
 
 import (
+	"flag"
 	"fmt"
 	"net"
 	"strconv"
@@ -17,10 +18,13 @@ var (
 )
 
 var (
-	g_chart *Chart = nil
+	g_chart   *Chart = nil
+	showtext1        = flag.String("showtext1", "100", "showtext1")
 )
 
 func main() {
+	flag.Parse()
+
 	g_chart = NewChart()
 	s := &gochart.ChartServer{}
 	s.AddChart("chart", g_chart, false)

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io"
 	"time"
@@ -12,7 +13,11 @@ import (
 var gChartSession *ChartSession
 
 func main() {
-	addrs := "127.0.0.1:5002"
+	param1 := "127.0.0.1"
+	flag.StringVar(&param1, "ip", "127.0.0.1", "ip")
+	flag.Parse()
+
+	addrs := fmt.Sprintf("%s:5002", param1)
 	gChartSession = &ChartSession{}
 	gChartSession.Connect("127.0.0.1:3333", gChartSession)
 	gChartSession.Verify()
@@ -71,4 +76,3 @@ func (this *ChartSession) OnRecv(data []byte, flag byte) {
 func (this *ChartSession) OnClose() {
 
 }
-

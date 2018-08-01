@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"sync"
 
 	"github.com/fananchong/gochart"
@@ -20,7 +21,7 @@ func NewChart() *Chart {
 	this.SampleNum = DEFAULT_SAMPLE_NUM
 	this.ChartType = "line"
 	this.Title = "网络丢包测试"
-	this.SubTitle = "服务器每 100ms 发送 400byte 消息给客户端"
+	this.SubTitle = fmt.Sprintf("服务器每 %sms 发送 400byte 消息给客户端", *showtext1)
 	this.YAxisText = "delay"
 	this.YMax = "2000"
 	this.ValueSuffix = "ms"

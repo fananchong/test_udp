@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"time"
 
@@ -8,8 +9,12 @@ import (
 )
 
 func main() {
+	param1 := 100
+	flag.IntVar(&param1, "interval", 100, "interval")
+	flag.Parse()
+
 	port := 5002
-	interval := 100 * time.Millisecond
+	interval := param1 * time.Millisecond
 	msg := getmsg()
 	KcpServer(port, interval, msg)
 }
