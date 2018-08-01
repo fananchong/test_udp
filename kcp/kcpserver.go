@@ -15,7 +15,7 @@ func main() {
 }
 
 func KcpServer(port int, interval time.Duration, msg []byte) {
-	lis, err := kcp.ListenWithOptions(fmt.Sprintf(":%d", port), nil, 10, 3)
+	lis, err := kcp.ListenWithOptions(fmt.Sprintf("0.0.0.0:%d", port), nil, 10, 3)
 	if err != nil {
 		panic(err)
 	}
@@ -36,7 +36,6 @@ func KcpServer(port int, interval time.Duration, msg []byte) {
 				select {
 				case <-t.C:
 					conn.Write(msg)
-					fmt.Println("aaaaaaaaaaaaaaaaaaaaaa")
 				}
 			}
 		}()

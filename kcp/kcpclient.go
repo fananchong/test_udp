@@ -21,11 +21,11 @@ func KcpClient(addrs string) {
 
 	fmt.Println("connect to ", conn.RemoteAddr().String())
 
-	//		buf := gotcp.NewByteBuffer()
-	//		msglen := len(MSG)
+
+	conn.Write([]byte("hello!"))
+
 	var tempbuf [1024]byte
 	for {
-		//			leastlen := msglen - buf.RdSize()
 		readnum, err := io.ReadAtLeast(conn, tempbuf[0:], 400)
 		if err != nil {
 			fmt.Println(err)
@@ -35,14 +35,8 @@ func KcpClient(addrs string) {
 			fmt.Println("readnum != 400")
 			panic("data error!")
 		}
-		fmt.Println("======================")
-		//			buf.Append(tempbuf[:readnum])
 		now := time.Now().UnixNano()
-		//			for buf.RdSize() >= msglen {
-		//				msgbuff := buf.RdBuf()
 		onKcpRecv(tempbuf[:400], now)
-		//				buf.RdFlip(msglen)
-		//			}
 	}
 }
 
