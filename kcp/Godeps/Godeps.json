@@ -7,6 +7,15 @@
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/fananchong/gotcp",
+			"Rev": "acbd817295116a8e31fa0d570c34e96b6a6e7fa8"
+		},
+		{
+			"ImportPath": "github.com/golang/protobuf/proto",
+			"Comment": "v1.1.0-22-g560bdb6",
+			"Rev": "560bdb64431cc123098c2db67f16053a923a0688"
+		},
+		{
 			"ImportPath": "github.com/klauspost/cpuid",
 			"Comment": "v1.1-4-ge7e905e",
 			"Rev": "e7e905edc00ea8827e58662220139109efea09db"

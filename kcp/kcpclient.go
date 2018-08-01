@@ -5,11 +5,17 @@ import (
 	"io"
 	"time"
 
+	"github.com/fananchong/gotcp"
 	"github.com/xtaci/kcp-go"
 )
 
+var gChartSession *ChartSession
+
 func main() {
 	addrs := "127.0.0.1:5002"
+	gChartSession := &ChartSession{}
+	gChartSession.Connect("127.0.0.1:3333", gChartSession)
+	gChartSession.Verify()
 	KcpClient(addrs)
 }
 
@@ -20,7 +26,6 @@ func KcpClient(addrs string) {
 	}
 
 	fmt.Println("connect to ", conn.RemoteAddr().String())
-
 
 	conn.Write([]byte("hello!"))
 
@@ -49,8 +54,23 @@ func onKcpRecv(data []byte, now int64) {
 		preTCPRecvTime = now
 	}
 
-	//	detal := (now - preTCPRecvTime) / int64(time.Millisecond)
-	//	preTCPRecvTime = now
+	detal := (now - preTCPRecvTime) / int64(time.Millisecond)
+	preTCPRecvTime = now
 
 	//	g_chart.AddKcpData(detal)
+
+	gChartSession.Send()
 }
+
+type ChartSession struct {
+	gotcp.Session
+}
+
+func (this *ChartSession) OnRecv(data []byte, flag byte) {
+
+}
+
+func (this *ChartSession) OnClose() {
+
+}
+
