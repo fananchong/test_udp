@@ -35,7 +35,8 @@ bool StartRakNetServer(int port, int broadcastInterval, const char* broadcastMsg
 	// I am creating two socketDesciptors, to create two sockets. One using IPV6 and the other IPV4
 	RakNet::SocketDescriptor socketDescriptor(port, 0);
 	socketDescriptor.socketFamily = AF_INET;
-	bool b = server->Startup(8, &socketDescriptor, 1) == RakNet::RAKNET_STARTED;
+	bool b = server->Startup(4, &socketDescriptor, 1) == RakNet::RAKNET_STARTED;
+	server->SetMaximumIncomingConnections(4);
 	if (!b)
 	{
 		puts("Server failed to start.");
