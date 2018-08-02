@@ -17,6 +17,22 @@
       ]
     },
     {
+      "name": "x64-Release",
+      "generator": "Visual Studio 15 2017",
+      "configurationType": "RelWithDebInfo",
+      "buildRoot": "${projectDir}\\..\\bin\\${name}",
+      "installRoot": "${projectDir}\\..\\bin\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "variables": [
+        {
+          "name": "CMAKE_TOOLCHAIN_FILE",
+          "value": "D:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake"
+        }
+      ]
+    },
+    {
       "name": "Linux-Debug",
       "generator": "Unix Makefiles",
       "remoteMachineName": "101.132.47.70",

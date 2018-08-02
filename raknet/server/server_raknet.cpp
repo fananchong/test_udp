@@ -40,6 +40,7 @@ bool StartRakNetServer(int port, int broadcastInterval, const char* broadcastMsg
 	RakNet::SocketDescriptor socketDescriptors[1];
 	socketDescriptors[0].port = atoi(portstring);
 	socketDescriptors[0].socketFamily = AF_INET; // Test out IPV4
+	sprintf(socketDescriptors[0].hostAddress, "%s", "0.0.0.0");
 	bool b = server->Startup(8, socketDescriptors, 1) == RakNet::RAKNET_STARTED;
 	if (!b)
 	{
