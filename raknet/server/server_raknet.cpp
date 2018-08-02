@@ -13,7 +13,7 @@
 #include <string.h>
 
 
-bool StartRakNetServer(const char* bindIP, int port, int broadcastInterval, const char* broadcastMsg, int broadcastMsgLen)
+bool StartRakNetServer(int port, int broadcastInterval, const char* broadcastMsg, int broadcastMsgLen)
 {
 	puts("Start RakNet Server ...");
 
@@ -29,19 +29,13 @@ bool StartRakNetServer(const char* bindIP, int port, int broadcastInterval, cons
 	// Holds packets
 	RakNet::Packet* p;
 
-	// Holds user data
-	char portstring[30] = { 0 };
-	sprintf(portstring, "%d", port);
-
 	// Starting the server is very simple.  2 players allowed.
 	// 0 means we don't care about a connectionValidationInteger, and false
 	// for low priority threads
 	// I am creating two socketDesciptors, to create two sockets. One using IPV6 and the other IPV4
-	RakNet::SocketDescriptor socketDescriptors[1];
-	socketDescriptors[0].port = atoi(portstring);
-	socketDescriptors[0].socketFamily = AF_INET; // Test out IPV4
-	sprintf(socketDescriptors[0].hostAddress, "%s", bindIP);
-	bool b = server->Startup(8, socketDescriptors, 1) == RakNet::RAKNET_STARTED;
+	RakNet::SocketDescriptor socketDescriptor(port, 0);
+	socketDescriptor.socketFamily = AF_INET;
+	bool b = server->Startup(8, &socketDescriptor, 1) == RakNet::RAKNET_STARTED;
 	if (!b)
 	{
 		puts("Server failed to start.");
