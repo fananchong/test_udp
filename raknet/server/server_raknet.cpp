@@ -37,22 +37,14 @@ bool StartRakNetServer(int port, int broadcastInterval, const char* broadcastMsg
 	// 0 means we don't care about a connectionValidationInteger, and false
 	// for low priority threads
 	// I am creating two socketDesciptors, to create two sockets. One using IPV6 and the other IPV4
-	RakNet::SocketDescriptor socketDescriptors[2];
+	RakNet::SocketDescriptor socketDescriptors[1];
 	socketDescriptors[0].port = atoi(portstring);
 	socketDescriptors[0].socketFamily = AF_INET; // Test out IPV4
-	socketDescriptors[1].port = atoi(portstring);
-	socketDescriptors[1].socketFamily = AF_INET6; // Test out IPV6
-	bool b = server->Startup(4, socketDescriptors, 2) == RakNet::RAKNET_STARTED;
-	server->SetMaximumIncomingConnections(4);
+	bool b = server->Startup(8, socketDescriptors, 1) == RakNet::RAKNET_STARTED;
 	if (!b)
 	{
-		// Try again, but leave out IPV6
-		b = server->Startup(4, socketDescriptors, 1) == RakNet::RAKNET_STARTED;
-		if (!b)
-		{
-			puts("Server failed to start.");
-			return false;
-		}
+		puts("Server failed to start.");
+		return false;
 	}
 	server->SetOccasionalPing(true);
 	server->SetUnreliableTimeout(1000);
