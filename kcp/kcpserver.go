@@ -14,7 +14,7 @@ func main() {
 	flag.Parse()
 
 	port := 5002
-	interval := param1 * time.Millisecond
+	interval := time.Duration(param1) * time.Millisecond
 	msg := getmsg()
 	KcpServer(port, interval, msg)
 }

@@ -10,4 +10,4 @@ set +ex
 
 docker rm -f gochart
 
-docker run -d -p 3333:3333 -p 8000:8000 --restart always --name gochart gochart
+docker run -d -p 3333:3333 -p 8000:8000 --restart always --name gochart gochart --showtext1=66
