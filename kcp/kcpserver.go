@@ -20,7 +20,7 @@ func main() {
 }
 
 func KcpServer(port int, interval time.Duration, msg []byte) {
-	lis, err := kcp.ListenWithOptions(fmt.Sprintf("0.0.0.0:%d", port), nil, 10, 3)
+	lis, err := kcp.ListenWithOptions(fmt.Sprintf("0.0.0.0:%d", port), nil, 0, 0)
 	if err != nil {
 		panic(err)
 	}
