@@ -15,6 +15,7 @@
 #include <unistd.h> // usleep
 #endif
 #include "client_helper.h"
+#include <vector>
 
 long long get_tick_count(void);
 
@@ -60,6 +61,7 @@ bool ConnectRakNetServer(const char*sip, int sport, int updateInterval, const st
 	char message[2048];
 
 	long long preTCPRecvTime = 0;
+	std::vector<long long> logs;
 
 	// Loop for input
 	while (1)
@@ -152,6 +154,15 @@ bool ConnectRakNetServer(const char*sip, int sport, int updateInterval, const st
 				char temp[256];
 				snprintf(temp, sizeof(temp), "1_%d", detal);
 				asioClient->Write(temp);
+
+				logs.push_back(detal);
+				if (logs.size() % 200 == 0) {
+					for (size_t i = 0; i < logs.size(); i++)
+					{
+						printf("%d ", logs[i]);
+					}
+					printf("\n");
+				}
 
 				break;
 			}

@@ -54,6 +54,7 @@ func KcpClient(addrs string) {
 
 var (
 	preTCPRecvTime int64 = 0
+	delaySlice     []int64
 )
 
 func onKcpRecv(data []byte, now int64) {
@@ -65,6 +66,10 @@ func onKcpRecv(data []byte, now int64) {
 	preTCPRecvTime = now
 	temp := []byte(fmt.Sprintf("2_%d", detal))
 	gChartSession.SendRaw(temp)
+	delaySlice = append(delaySlice, detal)
+	if len(delaySlice)%200 == 0 {
+		fmt.Println(delaySlice)
+	}
 }
 
 type ChartSession struct {
