@@ -25,12 +25,14 @@ func main() {
 }
 
 func KcpClient(addrs string) {
-	conn, err := kcp.DialWithOptions(addrs, nil, 10, 3)
+	conn, err := kcp.DialWithOptions(addrs, nil, 0, 0)
 	if err != nil {
 		panic(err)
 	}
 
 	fmt.Println("connect to ", conn.RemoteAddr().String())
+
+	setParam(conn)
 
 	conn.Write([]byte("hello!"))
 

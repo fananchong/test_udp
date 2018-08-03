@@ -21,43 +21,43 @@
 
 - gochart
 
-  需要安装 docker
-
-  执行 gochart 目录中的  ./build.sh 即可
-
-  生产2进制文件在 bin 目录下
+      需要安装 docker
+    
+      执行 gochart 目录中的  ./build.sh 即可
+    
+      生产2进制文件在 bin 目录下
 
 - kcpserver
 
-  需要安装 docker
-
-  执行 kcp 目录中的  ./build.sh 即可
-
-  生产2进制文件在 bin 目录下
+      需要安装 docker
+    
+      执行 kcp 目录中的  ./build.sh 即可
+    
+      生产2进制文件在 bin 目录下
 
 
 - kcpclient
 
-  执行 kcp 目录中的  ./build.bat 即可
-
-  生产2进制文件在 bin 目录下
+      执行 kcp 目录中的  ./build.bat 即可
+    
+      生产2进制文件在 bin 目录下
 
 
 - raknetserver
 
-  需要安装 vcpkg
-
-  执行 vcpkg install boost-asio
-
-  执行 raknet 目录下的 ./build.sh
-
-  生产2进制文件在 bin 目录下
+      需要安装 vcpkg
+    
+      执行 vcpkg install boost-asio
+    
+      执行 raknet 目录下的 ./build.sh
+    
+      生产2进制文件在 bin 目录下
 
 
 - raknetclient
 
-  需要安装 vcpkg、vs2017
-
-  通过 vs2017 打开 raknet cmkae目录
-
-  生产2进制文件在 bin 目录下
+      需要安装 vcpkg、vs2017
+    
+      通过 vs2017 打开 raknet cmkae目录
+    
+      生产2进制文件在 bin 目录下
