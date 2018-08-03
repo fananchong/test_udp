@@ -1,7 +1,5 @@
 package main
 
-// usage: gochart --log_dir=./log -stderrthreshold 0
-
 import (
 	"flag"
 	"fmt"
@@ -49,17 +47,33 @@ func main() {
 		fmt.Println("on connect. addr =", conn.RemoteAddr())
 
 		go func() {
+			var left []byte
 			for {
-				var b [1024]byte
-				ln, err := conn.Read(b[:])
+				var tempbuff [1024]byte
+				templen, err := conn.Read(tempbuff[:])
 				if err != nil {
 					fmt.Println(err)
 					break
 				}
-				if ln == 0 {
+				if templen == 0 {
 					continue
 				}
-				nn := strings.Split(string(b[:ln]), "_")
+
+				data := append(left, tempbuff[0:templen]...)
+				left = left[:0]
+				datalen := len(data)
+
+				beginIndex := 0
+			LABEL_AGAIN:
+				endIndex := findData(beginIndex, data, datalen)
+				if endIndex < 0 {
+					if beginIndex < datalen {
+						left = append(left, data[beginIndex:datalen]...)
+					}
+					continue
+				}
+
+				nn := strings.Split(string(data[beginIndex:endIndex]), "_")
 				n, err1 := strconv.Atoi(nn[1])
 				if err1 == nil {
 					if nn[0] == "1" {
@@ -70,8 +84,19 @@ func main() {
 				} else {
 					panic("error data!")
 				}
+				beginIndex = endIndex + 1
+				goto LABEL_AGAIN
 			}
 		}()
 	}
 
+}
+
+func findData(beginIndex int, data []byte, datalen int) int {
+	for i := beginIndex; i < datalen; i++ {
+		if string(data[i]) == ";" {
+			return i
+		}
+	}
+	return -1
 }

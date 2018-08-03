@@ -64,7 +64,7 @@ func onKcpRecv(data []byte, now int64) {
 
 	detal := (now - preTCPRecvTime) / int64(time.Millisecond)
 	preTCPRecvTime = now
-	temp := []byte(fmt.Sprintf("2_%d", detal))
+	temp := []byte(fmt.Sprintf("2_%d;", detal))
 	gChartSession.SendRaw(temp)
 	delaySlice = append(delaySlice, detal)
 	if len(delaySlice)%200 == 0 {
