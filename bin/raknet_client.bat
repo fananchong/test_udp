@@ -1,2 +1,2 @@
 cd x64-Release\client\RelWithDebInfo
-client.exe 192.168.93.183
+client.exe 101.132.47.70

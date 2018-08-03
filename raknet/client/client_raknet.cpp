@@ -66,7 +66,7 @@ bool ConnectRakNetServer(const char*sip, int sport, int updateInterval, const st
 	{
 		// This sleep keeps RakNet responsive
 #ifdef _WIN32
-		Sleep(30);
+		Sleep(1);
 #else
 		usleep(30 * 1000);
 #endif

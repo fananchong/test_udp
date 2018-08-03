@@ -17,5 +17,8 @@ int main(int argn, char* argv[])
 	boost::asio::io_context io_context;
 	std::shared_ptr<AsioClient> asioClient = InitAsioClient(io_context, "127.0.0.1", "3333");
 	std::thread thrd1(ConnectRakNetServer, server, raknetPort, updateInterval, asioClient);
-	io_context.run();
+	while (true) 
+	{
+		io_context.run();
+	}
 }

@@ -1,0 +1,1 @@
+gochart.exe --showtext1=100
