@@ -39,12 +39,16 @@ func TcpServer(port int, interval time.Duration, msg []byte) {
 			conn.SetWriteBuffer(128 * 1024)
 			conn.SetReadBuffer(128 * 1024)
 
-			// 每100ms发送一次 400byte 消息
+			// 每 100ms 发送一次 400byte 消息
 			t := time.NewTicker(interval)
 			for {
 				select {
 				case <-t.C:
-					conn.Write(msg)
+					_, err := conn.Write(msg)
+					if err != nil {
+						fmt.Println(err)
+						return
+					}
 				}
 			}
 		}()

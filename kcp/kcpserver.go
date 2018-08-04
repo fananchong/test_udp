@@ -37,12 +37,16 @@ func KcpServer(port int, interval time.Duration, msg []byte) {
 		fmt.Println("on connect. addr =", conn.RemoteAddr())
 
 		go func() {
-			// 每100ms发送一次 hello消息
+			// 每 100ms 发送一次 400byte 消息
 			t := time.NewTicker(interval)
 			for {
 				select {
 				case <-t.C:
-					conn.Write(msg)
+					_, err := conn.Write(msg)
+					if err != nil {
+						fmt.Println(err)
+						return
+					}
 				}
 			}
 		}()

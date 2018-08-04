@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io"
 	"net"
 	"time"
 
@@ -37,24 +36,45 @@ func TcpClient(addrs string) {
 	conn.SetWriteBuffer(128 * 1024)
 	conn.SetReadBuffer(128 * 1024)
 
-	buf := gotcp.NewByteBuffer()
-	msglen := 400
-	var tempbuf [1024]byte
+	var left []byte
 	for {
-		leastlen := msglen - buf.RdSize()
-		readnum, err := io.ReadAtLeast(conn, tempbuf[0:], leastlen)
+		var tempbuff [102400]byte
+		templen, err := conn.Read(tempbuff[:])
 		if err != nil {
 			fmt.Println(err)
-			return
+			break
 		}
-		buf.Append(tempbuf[:readnum])
+		if templen == 0 {
+			continue
+		}
+
+		data := append(left, tempbuff[0:templen]...)
+		left = left[:0]
+		datalen := len(data)
+
+		beginIndex := 0
+	LABEL_AGAIN:
+		endIndex := findData(beginIndex, data, datalen)
+		if endIndex < 0 {
+			if beginIndex < datalen {
+				left = append(left, data[beginIndex:datalen]...)
+			}
+			continue
+		}
+
 		now := time.Now().UnixNano()
-		for buf.RdSize() >= msglen {
-			msgbuff := buf.RdBuf()
-			onTcpRecv(msgbuff[:msglen], now)
-			buf.RdFlip(msglen)
-		}
+		onTcpRecv(data[beginIndex:endIndex], now)
+
+		beginIndex = endIndex
+		goto LABEL_AGAIN
 	}
+}
+
+func findData(beginIndex int, data []byte, datalen int) int {
+	if beginIndex+400 <= datalen {
+		return beginIndex + 400
+	}
+	return -1
 }
 
 var (
@@ -63,6 +83,10 @@ var (
 )
 
 func onTcpRecv(data []byte, now int64) {
+	if data[0] != 97 || data[400-1] != 0 {
+		panic("data error!!")
+	}
+
 	if preTCPRecvTime == 0 {
 		preTCPRecvTime = now
 	}

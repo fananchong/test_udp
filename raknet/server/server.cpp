@@ -16,6 +16,7 @@ int main(int argn, char* argv[])
 
 	char msg[dataSzie] = { 0 };
 	memset(msg, 97, dataSzie - 1);	// msg =  "aaaaa ... aaaaaa"
+	msg[dataSzie - 1] = 0;
 
 	std::thread thrd1(StartRakNetServer, raknetPort, broadcastInterval, msg, dataSzie);
 

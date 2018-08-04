@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io"
 	"time"
 
 	"github.com/fananchong/gotcp"
@@ -36,20 +35,45 @@ func KcpClient(addrs string) {
 
 	conn.Write([]byte("hello!"))
 
-	var tempbuf [1024]byte
+	var left []byte
 	for {
-		readnum, err := io.ReadAtLeast(conn, tempbuf[0:], 400)
+		var tempbuff [102400]byte
+		templen, err := conn.Read(tempbuff[:])
 		if err != nil {
 			fmt.Println(err)
-			return
+			break
 		}
-		if readnum != 400 {
-			fmt.Println("readnum != 400")
-			panic("data error!")
+		if templen == 0 {
+			continue
 		}
+
+		data := append(left, tempbuff[0:templen]...)
+		left = left[:0]
+		datalen := len(data)
+
+		beginIndex := 0
+	LABEL_AGAIN:
+		endIndex := findData(beginIndex, data, datalen)
+		if endIndex < 0 {
+			if beginIndex < datalen {
+				left = append(left, data[beginIndex:datalen]...)
+			}
+			continue
+		}
+
 		now := time.Now().UnixNano()
-		onKcpRecv(tempbuf[:400], now)
+		onKcpRecv(data[beginIndex:endIndex], now)
+
+		beginIndex = endIndex
+		goto LABEL_AGAIN
 	}
+}
+
+func findData(beginIndex int, data []byte, datalen int) int {
+	if beginIndex+400 <= datalen {
+		return beginIndex + 400
+	}
+	return -1
 }
 
 var (
@@ -58,6 +82,9 @@ var (
 )
 
 func onKcpRecv(data []byte, now int64) {
+	if data[0] != 97 || data[400-1] != 0 {
+		panic("data error!!")
+	}
 	if preTCPRecvTime == 0 {
 		preTCPRecvTime = now
 	}

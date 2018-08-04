@@ -144,6 +144,13 @@ bool ConnectRakNetServer(const char*sip, int sport, int updateInterval, const st
 					exit(0);
 				}
 
+				if (p->data[0] != 97 || p->data[400 - 1] != 0)
+				{
+					printf("data error! p->bitSize = %d", p->bitSize);
+					printf("data = %s", p->data);
+					exit(0);
+				}
+
 				auto now = get_tick_count();
 				if (preTCPRecvTime == 0)
 				{
