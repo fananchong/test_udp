@@ -18,3 +18,6 @@ cp -f kcpclient ../../bin/test1
 
 #docker run -d -p 5002:5002 --restart always --name kcpserver kcpserver
 
+rm -rf ./kcpserver
+rm -rf ./kcpclient
+

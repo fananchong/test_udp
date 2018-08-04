@@ -11,3 +11,7 @@ docker run --rm -e GOPATH=/go/ -v "$PWD":/go/src/gochart -w /go/src/gochart gola
 #docker rm -f gochart
 
 #docker run -d -p 3333:3333 -p 8000:8000 --restart always --name gochart gochart --showtext1=66
+
+
+rm -rf gochart
+
