@@ -1,0 +1,19 @@
+{
+	"ImportPath": "myapp",
+	"GoVersion": "go1.10",
+	"GodepVersion": "v80",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/fananchong/gotcp",
+			"Rev": "381275bdb69ed3266d4caa23250b268977bb817e"
+		},
+		{
+			"ImportPath": "github.com/golang/protobuf/proto",
+			"Comment": "v1.1.0-22-g560bdb6",
+			"Rev": "560bdb64431cc123098c2db67f16053a923a0688"
+		}
+	]
+}
