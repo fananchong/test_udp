@@ -5,8 +5,8 @@ set -ex
 docker run --rm -e GOPATH=/go/ -v "$PWD":/go/src/kcpserver -w /go/src/kcpserver golang go build ./kcpserver.go ./common.go
 docker run --rm -e GOPATH=/go/ -v "$PWD":/go/src/kcpclient -w /go/src/kcpclient golang go build ./kcpclient.go ./common.go
 
-cp -f kcpserver ../bin
-cp -f kcpclient ../bin
+cp -f kcpserver ../../bin/test1
+cp -f kcpclient ../../bin/test1
 
 
 #docker build -t kcpserver .
