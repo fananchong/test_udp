@@ -15,6 +15,25 @@
 
 ![图1](assets/1.jpg)
 
+## 进程开启顺序
+
+1. 先开各 server
+2. 再开 gochart
+3. 再开各 client
+4. 打开 IE ，输入 <http://127.0.0.1:8000/?query=chart>
+
+## 模拟弱网环境
+
+以下 3 个命令：
+
+```
+tc qdisc add dev eth0 root netem delay 100ms 10ms 30% loss 15%
+tc qdisc show dev eth0
+tc qdisc del dev eth0 root netem
+```
+
+_(eth0 替换为实际网卡名字)_
+
 ## 编译
 
 - gochart
