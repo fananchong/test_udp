@@ -11,6 +11,7 @@ type Chart struct {
 	gochart.ChartTime
 	raknet []int64
 	kcp    []int64
+	tcp    []int64
 	m      sync.Mutex
 }
 
@@ -42,8 +43,13 @@ func (this *Chart) Update(now int64) map[string][]interface{} {
 	for _, v := range this.kcp {
 		datas["kcp"] = append(datas["kcp"], v)
 	}
+	datas["tcp"] = make([]interface{}, 0)
+	for _, v := range this.tcp {
+		datas["tcp"] = append(datas["tcp"], v)
+	}
 	this.raknet = this.raknet[:0]
 	this.kcp = this.kcp[:0]
+	this.tcp = this.tcp[:0]
 	this.m.Unlock()
 	return datas
 }
@@ -57,5 +63,11 @@ func (this *Chart) AddRakNetData(v int64) {
 func (this *Chart) AddKcpData(v int64) {
 	this.m.Lock()
 	this.kcp = append(this.kcp, v)
+	this.m.Unlock()
+}
+
+func (this *Chart) AddTcpData(v int64) {
+	this.m.Lock()
+	this.tcp = append(this.tcp, v)
 	this.m.Unlock()
 }

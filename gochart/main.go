@@ -80,6 +80,8 @@ func main() {
 						g_chart.AddRakNetData(int64(n))
 					} else if nn[0] == "2" {
 						g_chart.AddKcpData(int64(n))
+					} else if nn[0] == "3" {
+						g_chart.AddTcpData(int64(n))
 					}
 				} else {
 					panic("error data!")

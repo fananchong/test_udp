@@ -33,31 +33,28 @@ func TcpClient(addrs string) {
 
 	fmt.Println("connect to ", conn.RemoteAddr().String())
 
-	go func() {
+	conn.SetNoDelay(true)
+	conn.SetWriteBuffer(128 * 1024)
+	conn.SetReadBuffer(128 * 1024)
 
-		conn.SetNoDelay(true)
-		conn.SetWriteBuffer(128 * 1024)
-		conn.SetReadBuffer(128 * 1024)
-
-		buf := gotcp.NewByteBuffer()
-		msglen := 400
-		var tempbuf [1024]byte
-		for {
-			leastlen := msglen - buf.RdSize()
-			readnum, err := io.ReadAtLeast(conn, tempbuf[0:], leastlen)
-			if err != nil {
-				fmt.Println(err)
-				return
-			}
-			buf.Append(tempbuf[:readnum])
-			now := time.Now().UnixNano()
-			for buf.RdSize() >= msglen {
-				msgbuff := buf.RdBuf()
-				onTcpRecv(msgbuff[:msglen], now)
-				buf.RdFlip(msglen)
-			}
+	buf := gotcp.NewByteBuffer()
+	msglen := 400
+	var tempbuf [1024]byte
+	for {
+		leastlen := msglen - buf.RdSize()
+		readnum, err := io.ReadAtLeast(conn, tempbuf[0:], leastlen)
+		if err != nil {
+			fmt.Println(err)
+			return
 		}
-	}()
+		buf.Append(tempbuf[:readnum])
+		now := time.Now().UnixNano()
+		for buf.RdSize() >= msglen {
+			msgbuff := buf.RdBuf()
+			onTcpRecv(msgbuff[:msglen], now)
+			buf.RdFlip(msglen)
+		}
+	}
 }
 
 var (
