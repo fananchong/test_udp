@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"net"
 	"time"
 
 	"github.com/fananchong/gotcp"
@@ -20,61 +19,26 @@ func main() {
 	gChartSession = &ChartSession{}
 	gChartSession.Connect("127.0.0.1:3333", gChartSession)
 	gChartSession.Verify()
-	TcpClient(addrs)
-}
 
-func TcpClient(addrs string) {
-	addr, _ := net.ResolveTCPAddr("tcp4", addrs)
-	conn, err := net.DialTCP("tcp4", nil, addr)
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println("connect to ", conn.RemoteAddr().String())
-
-	conn.SetNoDelay(true)
-	conn.SetWriteBuffer(128 * 1024)
-	conn.SetReadBuffer(128 * 1024)
-
-	var left []byte
+	echo := &Echo{}
+	echo.Connect(addrs, echo)
+	echo.Verify()
+	echo.Send([]byte("hello"), 0)
 	for {
-		var tempbuff [102400]byte
-		templen, err := conn.Read(tempbuff[:])
-		if err != nil {
-			fmt.Println(err)
-			break
-		}
-		if templen == 0 {
-			continue
-		}
-
-		data := append(left, tempbuff[0:templen]...)
-		left = left[:0]
-		datalen := len(data)
-
-		beginIndex := 0
-	LABEL_AGAIN:
-		endIndex := findData(beginIndex, data, datalen)
-		if endIndex < 0 {
-			if beginIndex < datalen {
-				left = append(left, data[beginIndex:datalen]...)
-			}
-			continue
-		}
-
-		now := time.Now().UnixNano()
-		onTcpRecv(data[beginIndex:endIndex], now)
-
-		beginIndex = endIndex
-		goto LABEL_AGAIN
+		time.Sleep(100 * time.Second)
 	}
 }
 
-func findData(beginIndex int, data []byte, datalen int) int {
-	if beginIndex+400 <= datalen {
-		return beginIndex + 400
-	}
-	return -1
+type Echo struct {
+	gotcp.Session
+}
+
+func (this *Echo) OnRecv(data []byte, flag byte) {
+	onTcpRecv(data, time.Now().UnixNano())
+}
+
+func (this *Echo) OnClose() {
+	fmt.Println("Echo.OnClose")
 }
 
 var (

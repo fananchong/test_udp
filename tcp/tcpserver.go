@@ -3,8 +3,15 @@ package main
 import (
 	"flag"
 	"fmt"
-	"net"
 	"time"
+
+	"github.com/fananchong/gotcp"
+)
+
+var (
+	port     int
+	interval time.Duration
+	msg      []byte
 )
 
 func main() {
@@ -12,47 +19,47 @@ func main() {
 	flag.IntVar(&param1, "interval", 100, "interval")
 	flag.Parse()
 
-	port := 5003
-	interval := time.Duration(param1) * time.Millisecond
-	msg := getmsg()
-	TcpServer(port, interval, msg)
+	port = 5003
+	interval = time.Duration(param1) * time.Millisecond
+	msg = getmsg()
+
+	s := &gotcp.Server{}
+	s.RegisterSessType(Echo{})
+	s.Start(fmt.Sprintf(":%d", port))
+	for {
+		time.Sleep(100 * time.Second)
+	}
 }
 
-func TcpServer(port int, interval time.Duration, msg []byte) {
-	addr, _ := net.ResolveTCPAddr("tcp", fmt.Sprintf("0.0.0.0:%d", port))
-	lis, err := net.ListenTCP("tcp", addr)
-	if err != nil {
-		panic(err)
-	}
+type Echo struct {
+	gotcp.Session
+	t        *time.Ticker
+	chanStop chan int
+}
 
-	for {
-		conn, err := lis.AcceptTCP()
-		if err != nil {
-			fmt.Println(err)
-			continue
-		}
-
-		fmt.Println("on connect. addr =", conn.RemoteAddr())
-
+func (this *Echo) OnRecv(data []byte, flag byte) {
+	if this.IsVerified() == false {
+		this.Verify()
+		this.t = time.NewTicker(interval)
 		go func() {
-			conn.SetNoDelay(true)
-			conn.SetWriteBuffer(128 * 1024)
-			conn.SetReadBuffer(128 * 1024)
-
-			// 每 100ms 发送一次 400byte 消息
-			t := time.NewTicker(interval)
 			for {
 				select {
-				case <-t.C:
-					_, err := conn.Write(msg)
-					if err != nil {
-						fmt.Println(err)
-						return
-					}
+				case <-this.t.C:
+					this.Send(msg, 0)
+				case <-this.chanStop:
+					return
 				}
 			}
 		}()
 	}
+}
+
+func (this *Echo) OnClose() {
+	fmt.Println("Echo.OnClose")
+	if this.t != nil {
+		this.t.Stop()
+	}
+	this.chanStop <- 1
 }
 
 func getmsg() []byte {
