@@ -21,17 +21,20 @@
 2. 再本地执行 bin/test1/client.bat
 3. 打开 IE ，输入 <http://127.0.0.1:8000/?query=chart>
 
+_(脚本内IP做了硬编码，根据实际情况需改之)_
+
 ## 模拟弱网环境
 
-以下 3 个命令：
+- bin/netem_1.sh
 
-```
-tc qdisc add dev eth0 root netem delay 100ms 10ms 30% loss 15%
-tc qdisc show dev eth0
-tc qdisc del dev eth0 root netem
-```
+  对下行（服务器输出方向）做弱网模拟
 
-_(eth0 替换为实际网卡名字)_
+- bin/netem_2.sh
+
+  对上、下行（服务器输出方向、输入方向）都做做弱网模拟
+
+
+_(脚本内网卡名字做了硬编码，根据实际情况需改之)_
 
 ## 编译
 
