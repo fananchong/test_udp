@@ -81,3 +81,9 @@ _(脚本内网卡名字做了硬编码，根据实际情况需改之)_
   通过 vs2017 打开 raknet cmkae目录
 
   生产2进制文件在 bin 目录下
+  
+  
+## 测试结果
+
+参见：https://blog.csdn.net/u013272009/article/details/81430262
+
