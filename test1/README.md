@@ -1,6 +1,6 @@
 # test_udp
 
-测试比较 kcp 、 raknet、enet、tcp 等库
+测试比较 kcp 、 raknet、tcp 等库
 
 ## 测试方法
 
@@ -17,10 +17,9 @@
 
 ## 进程开启顺序
 
-1. 先开各 server
-2. 再开 gochart
-3. 再开各 client
-4. 打开 IE ，输入 <http://127.0.0.1:8000/?query=chart>
+1. 阿里云上执行 bin/test1/start_66.sh
+2. 再本地执行 bin/test1/client.bat
+3. 打开 IE ，输入 <http://127.0.0.1:8000/?query=chart>
 
 ## 模拟弱网环境
 
