@@ -14,8 +14,7 @@
 
 - 详细文档
 
-  <test1 readme.md="">
-  </test1>
+  [test1/README.md](test1/README.md)
 
 - 测试结果
 
