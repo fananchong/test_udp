@@ -13,17 +13,19 @@ var gChartSession *ChartSession
 
 func main() {
 	param1 := "127.0.0.1"
+	param2 := 100
 	flag.StringVar(&param1, "ip", "127.0.0.1", "ip")
+	flag.IntVar(&param2, "interval", 100, "interval")
 	flag.Parse()
 
-	addrs := fmt.Sprintf("%s:5002", param1)
+	addrs := fmt.Sprintf("%s:5004", param1)
 	gChartSession = &ChartSession{}
 	gChartSession.Connect("127.0.0.1:3333", gChartSession)
 	gChartSession.Verify()
-	KcpClient(addrs)
+	KcpClient(addrs, time.Duration(param2))
 }
 
-func KcpClient(addrs string) {
+func KcpClient(addrs string, interval time.Duration) {
 	conn, err := kcp.DialWithOptions(addrs, nil, 0, 0)
 	if err != nil {
 		panic(err)
@@ -33,39 +35,55 @@ func KcpClient(addrs string) {
 
 	setParam(conn)
 
-	conn.Write([]byte("hello!"))
+	msg := getmsg()
 
-	var left []byte
-	for {
-		var tempbuff [102400]byte
-		templen, err := conn.Read(tempbuff[:])
-		if err != nil {
-			fmt.Println(err)
-			break
-		}
-		if templen == 0 {
-			continue
-		}
-
-		data := append(left, tempbuff[0:templen]...)
-		left = left[:0]
-		datalen := len(data)
-
-		beginIndex := 0
-	LABEL_AGAIN:
-		endIndex := findData(beginIndex, data, datalen)
-		if endIndex < 0 {
-			if beginIndex < datalen {
-				left = append(left, data[beginIndex:datalen]...)
+	// recv
+	go func() {
+		var left []byte
+		for {
+			var tempbuff [102400]byte
+			templen, err := conn.Read(tempbuff[:])
+			if err != nil {
+				fmt.Println(err)
+				break
 			}
-			continue
+			if templen == 0 {
+				continue
+			}
+
+			data := append(left, tempbuff[0:templen]...)
+			left = left[:0]
+			datalen := len(data)
+
+			beginIndex := 0
+		LABEL_AGAIN:
+			endIndex := findData(beginIndex, data, datalen)
+			if endIndex < 0 {
+				if beginIndex < datalen {
+					left = append(left, data[beginIndex:datalen]...)
+				}
+				continue
+			}
+
+			now := time.Now().UnixNano()
+			onKcpRecv(data[beginIndex:endIndex], now)
+
+			beginIndex = endIndex
+			goto LABEL_AGAIN
 		}
+	}()
 
-		now := time.Now().UnixNano()
-		onKcpRecv(data[beginIndex:endIndex], now)
-
-		beginIndex = endIndex
-		goto LABEL_AGAIN
+	// send
+	t := time.NewTicker(interval)
+	for {
+		select {
+		case <-t.C:
+			_, err := conn.Write(msg)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+		}
 	}
 }
 
@@ -109,4 +127,14 @@ func (this *ChartSession) OnRecv(data []byte, flag byte) {
 
 func (this *ChartSession) OnClose() {
 
+}
+
+func getmsg() []byte {
+	count := 400
+	var msg []byte
+	for i := 0; i < count; i++ {
+		msg = append(msg, 97)
+	}
+	msg[count-1] = 0
+	return msg
 }
