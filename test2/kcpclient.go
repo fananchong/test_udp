@@ -22,7 +22,7 @@ func main() {
 	gChartSession = &ChartSession{}
 	gChartSession.Connect("127.0.0.1:3333", gChartSession)
 	gChartSession.Verify()
-	KcpClient(addrs, time.Duration(param2))
+	KcpClient(addrs, time.Duration(param2)*time.Millisecond)
 }
 
 func KcpClient(addrs string, interval time.Duration) {
