@@ -1,6 +1,6 @@
 # test1
 
-测试比较 kcp 、 raknet、tcp 等库
+测试比较 kcp 、raknet、tcp 等库
 
 ## 测试方法
 
