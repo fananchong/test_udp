@@ -12,6 +12,8 @@ type Chart struct {
 	raknet []int64
 	kcp    []int64
 	tcp    []int64
+	k1     []int64
+	k2     []int64
 	m      sync.Mutex
 }
 
@@ -29,6 +31,8 @@ func NewChart() *Chart {
 	this.TickLabelStep = "100"
 	this.PlotLinesY = "{ color:'red', dashStyle:'longdashdot', value:100, width:1, label:{ text:'100ms', align:'left' } }"
 	this.PlotLinesY += ",{ color:'red', dashStyle:'longdashdot', value:200, width:1, label:{ text:'200ms', align:'left' } }"
+	this.PlotLinesY += ",{ color:'red', dashStyle:'longdashdot', value:300, width:1, label:{ text:'300ms', align:'left' } }"
+	this.PlotLinesY += ",{ color:'red', dashStyle:'longdashdot', value:400, width:1, label:{ text:'400ms', align:'left' } }"
 	return this
 }
 
@@ -47,9 +51,19 @@ func (this *Chart) Update(now int64) map[string][]interface{} {
 	for _, v := range this.tcp {
 		datas["tcp"] = append(datas["tcp"], v)
 	}
+	datas["k1"] = make([]interface{}, 0)
+	for _, v := range this.k1 {
+		datas["k1"] = append(datas["k1"], v)
+	}
+	datas["k2"] = make([]interface{}, 0)
+	for _, v := range this.k2 {
+		datas["k2"] = append(datas["k2"], v)
+	}
 	this.raknet = this.raknet[:0]
 	this.kcp = this.kcp[:0]
 	this.tcp = this.tcp[:0]
+	this.k1 = this.k1[:0]
+	this.k2 = this.k2[:0]
 	this.m.Unlock()
 	return datas
 }
@@ -69,5 +83,17 @@ func (this *Chart) AddKcpData(v int64) {
 func (this *Chart) AddTcpData(v int64) {
 	this.m.Lock()
 	this.tcp = append(this.tcp, v)
+	this.m.Unlock()
+}
+
+func (this *Chart) AddK1Data(v int64) {
+	this.m.Lock()
+	this.k1 = append(this.k1, v)
+	this.m.Unlock()
+}
+
+func (this *Chart) AddK2Data(v int64) {
+	this.m.Lock()
+	this.k2 = append(this.k2, v)
 	this.m.Unlock()
 }

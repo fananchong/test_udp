@@ -3,23 +3,30 @@ package main
 import (
 	"flag"
 	"fmt"
-	"time"
 
 	"github.com/xtaci/kcp-go"
 )
 
 func main() {
-	param1 := 100
-	flag.IntVar(&param1, "interval", 100, "interval")
+	mode := 0
+	flag.IntVar(&mode, "mode", 0, "mode")
 	flag.Parse()
 
-	port := 5004
-	interval := time.Duration(param1) * time.Millisecond
-	KcpServer(port, interval)
+	var datashards int = 0
+	var parity int = 0
+	var port int = 5004
+
+	if mode == 1 {
+		datashards = 2
+		parity = 1
+		port = 5005
+	}
+
+	KcpServer(port, datashards, parity)
 }
 
-func KcpServer(port int, interval time.Duration) {
-	lis, err := kcp.ListenWithOptions(fmt.Sprintf(":%d", port), nil, 0, 0)
+func KcpServer(port, datashards, parity int) {
+	lis, err := kcp.ListenWithOptions(fmt.Sprintf(":%d", port), nil, datashards, parity)
 	if err != nil {
 		panic(err)
 	}

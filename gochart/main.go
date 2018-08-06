@@ -82,6 +82,10 @@ func main() {
 						g_chart.AddKcpData(int64(n))
 					} else if nn[0] == "3" {
 						g_chart.AddTcpData(int64(n))
+					} else if nn[0] == "4" {
+						g_chart.AddK1Data(int64(n))
+					} else if nn[0] == "5" {
+						g_chart.AddK2Data(int64(n))
 					}
 				} else {
 					panic("error data!")
