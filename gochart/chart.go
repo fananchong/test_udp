@@ -9,12 +9,12 @@ import (
 
 type Chart struct {
 	gochart.ChartTime
-	raknet []int64
-	kcp    []int64
-	tcp    []int64
-	k1     []int64
-	k2     []int64
-	m      sync.Mutex
+	raknet   []int64
+	kcp      []int64
+	tcp      []int64
+	kcp_fast []int64
+	kcp_fec  []int64
+	m        sync.Mutex
 }
 
 func NewChart() *Chart {
@@ -51,19 +51,19 @@ func (this *Chart) Update(now int64) map[string][]interface{} {
 	for _, v := range this.tcp {
 		datas["tcp"] = append(datas["tcp"], v)
 	}
-	datas["k1"] = make([]interface{}, 0)
-	for _, v := range this.k1 {
-		datas["k1"] = append(datas["k1"], v)
+	datas["kcp_fast"] = make([]interface{}, 0)
+	for _, v := range this.kcp_fast {
+		datas["kcp_fast"] = append(datas["kcp_fast"], v)
 	}
-	datas["k2"] = make([]interface{}, 0)
-	for _, v := range this.k2 {
-		datas["k2"] = append(datas["k2"], v)
+	datas["kcp_fec"] = make([]interface{}, 0)
+	for _, v := range this.kcp_fec {
+		datas["kcp_fec"] = append(datas["kcp_fec"], v)
 	}
 	this.raknet = this.raknet[:0]
 	this.kcp = this.kcp[:0]
 	this.tcp = this.tcp[:0]
-	this.k1 = this.k1[:0]
-	this.k2 = this.k2[:0]
+	this.kcp_fast = this.kcp_fast[:0]
+	this.kcp_fec = this.kcp_fec[:0]
 	this.m.Unlock()
 	return datas
 }
@@ -88,12 +88,12 @@ func (this *Chart) AddTcpData(v int64) {
 
 func (this *Chart) AddK1Data(v int64) {
 	this.m.Lock()
-	this.k1 = append(this.k1, v)
+	this.kcp_fast = append(this.kcp_fast, v)
 	this.m.Unlock()
 }
 
 func (this *Chart) AddK2Data(v int64) {
 	this.m.Lock()
-	this.k2 = append(this.k2, v)
+	this.kcp_fec = append(this.kcp_fec, v)
 	this.m.Unlock()
 }
