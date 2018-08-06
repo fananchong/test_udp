@@ -1,0 +1,105 @@
+{
+	"ImportPath": "myapp",
+	"GoVersion": "go1.10",
+	"GodepVersion": "v80",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/fananchong/gotcp",
+			"Rev": "381275bdb69ed3266d4caa23250b268977bb817e"
+		},
+		{
+			"ImportPath": "github.com/golang/protobuf/proto",
+			"Comment": "v1.1.0-22-g560bdb6",
+			"Rev": "560bdb64431cc123098c2db67f16053a923a0688"
+		},
+		{
+			"ImportPath": "github.com/klauspost/cpuid",
+			"Comment": "v1.1-4-ge7e905e",
+			"Rev": "e7e905edc00ea8827e58662220139109efea09db"
+		},
+		{
+			"ImportPath": "github.com/klauspost/reedsolomon",
+			"Comment": "v1.6-9-g925cb01",
+			"Rev": "925cb01d65108f2c935e02fdb79ff4a055a4a20d"
+		},
+		{
+			"ImportPath": "github.com/pkg/errors",
+			"Comment": "v0.8.0-12-g816c908",
+			"Rev": "816c9085562cd7ee03e7f8188a1cfd942858cded"
+		},
+		{
+			"ImportPath": "github.com/templexxx/cpufeat",
+			"Rev": "cef66df7f161dee20f4d650da7268d77eaaec82d"
+		},
+		{
+			"ImportPath": "github.com/templexxx/xor",
+			"Comment": "0.1.2",
+			"Rev": "0af8e873c554da75f37f2049cdffda804533d44c"
+		},
+		{
+			"ImportPath": "github.com/tjfoc/gmsm/sm4",
+			"Comment": "v1.1-12-g31bd720",
+			"Rev": "31bd720984f8ed12526f8667a2b4432f3132da0f"
+		},
+		{
+			"ImportPath": "github.com/xtaci/kcp-go",
+			"Comment": "v3.24-2-gb9b28a9",
+			"Rev": "b9b28a9a83204b64b68e92dd85317476758944ba"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/blowfish",
+			"Rev": "c126467f60eb25f8f27e5a981f32a87e3965053f"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/cast5",
+			"Rev": "c126467f60eb25f8f27e5a981f32a87e3965053f"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/internal/subtle",
+			"Rev": "c126467f60eb25f8f27e5a981f32a87e3965053f"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/pbkdf2",
+			"Rev": "c126467f60eb25f8f27e5a981f32a87e3965053f"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/salsa20",
+			"Rev": "c126467f60eb25f8f27e5a981f32a87e3965053f"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/salsa20/salsa",
+			"Rev": "c126467f60eb25f8f27e5a981f32a87e3965053f"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/tea",
+			"Rev": "c126467f60eb25f8f27e5a981f32a87e3965053f"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/twofish",
+			"Rev": "c126467f60eb25f8f27e5a981f32a87e3965053f"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/xtea",
+			"Rev": "c126467f60eb25f8f27e5a981f32a87e3965053f"
+		},
+		{
+			"ImportPath": "golang.org/x/net/bpf",
+			"Rev": "3673e40ba22529d22c3fd7c93e97b0ce50fa7bdd"
+		},
+		{
+			"ImportPath": "golang.org/x/net/internal/iana",
+			"Rev": "3673e40ba22529d22c3fd7c93e97b0ce50fa7bdd"
+		},
+		{
+			"ImportPath": "golang.org/x/net/internal/socket",
+			"Rev": "3673e40ba22529d22c3fd7c93e97b0ce50fa7bdd"
+		},
+		{
+			"ImportPath": "golang.org/x/net/ipv4",
+			"Rev": "3673e40ba22529d22c3fd7c93e97b0ce50fa7bdd"
+		}
+	]
+}
