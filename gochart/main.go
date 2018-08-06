@@ -17,7 +17,7 @@ var (
 
 var (
 	g_chart   *Chart = nil
-	showtext1        = flag.String("showtext1", "100", "showtext1")
+	showtext1        = flag.String("showtext1", "服务器每 66ms 发送 400byte 消息给客户端", "showtext1")
 )
 
 func main() {

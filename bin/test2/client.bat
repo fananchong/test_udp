@@ -1,9 +1,10 @@
+chcp 65001
 
 set ip=101.132.47.70
-set interval=66
+set interval=33
 
 cd ..
-start gochart.exe --showtext1=%interval%
+start gochart.exe --showtext1="客户端每隔 33ms 发送 400byte 数据给服务器，服务器回发，到客户端收到包的时间间隔"
 cd test2
 
 REM fast mode

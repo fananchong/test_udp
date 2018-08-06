@@ -2,7 +2,7 @@
 set ip=101.132.47.70
 
 cd ..
-start gochart.exe --showtext1=66
+start gochart.exe
 cd test1
 
 REM start tcpclient.exe --ip=%ip%
